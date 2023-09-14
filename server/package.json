@@ -1,5 +1,5 @@
 {
-  "name": "spotistats-server",
+  "name": "now-playr-server",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
