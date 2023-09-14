@@ -1,7 +1,4 @@
-import type {
-  IOptions,
-  RecursivePartial,
-} from "tsparticles-engine";
+import type { IOptions, RecursivePartial } from "tsparticles-engine";
 
 export const particlesOptions: RecursivePartial<IOptions> = {
   fullScreen: {
@@ -72,3 +69,9 @@ export const particlesOptions: RecursivePartial<IOptions> = {
   },
   detectRetina: true,
 };
+
+if (particlesOptions.particles) {
+  if (particlesOptions.particles.color) {
+    particlesOptions.particles.color.value = "#38bdf8";
+  }
+}
