@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import {
   ReactNode,
   createContext,
@@ -6,8 +5,9 @@ import {
   useEffect,
   useState,
 } from "react";
-import useSpotify from "./useSpotify";
-import { useAuthContext } from "./AuthProvider";
+import useCurrentPlaying from "@/hooks/useCurrentPlaying";
+import { ISpotifyPlayer } from "@/types";
+import { useColor, usePalette } from "color-thief-react";
 
 type Globals = {
   colors: string[];
@@ -16,6 +16,7 @@ type Globals = {
 };
 
 interface IAuthContext {
+  currentPlaying?: ISpotifyPlayer | undefined;
   global: Globals;
   setGlobal: React.Dispatch<React.SetStateAction<Globals>>;
 }
@@ -32,22 +33,47 @@ const initialAuthContext: IAuthContext = {
 const GlobalContext = createContext<IAuthContext>(initialAuthContext);
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  const { getPlaybackState } = useSpotify().me;
-  const { accessToken } = useAuthContext().auth;
   const [global, setGlobal] = useState<Globals>(initialAuthContext.global);
+  const { currentPlaying } = useCurrentPlaying(true, 5000);
 
-  const { data } = useQuery({
-    enabled: accessToken !== undefined,
-    queryKey: ["currentPlaying"],
-    queryFn: getPlaybackState,
-  });
+  const { data: colors, error: colorsError } = usePalette(
+    currentPlaying?.item?.album?.images[0].url ?? "",
+    4,
+    "hex",
+    {
+      crossOrigin: "Anonymous",
+    },
+  );
+
+  const { data: bgColor, error: bgColorError } = useColor(
+    currentPlaying?.item?.album?.images[0].url ?? "",
+    "hex",
+    {
+      crossOrigin: "Anonymous",
+    },
+  );
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    if (colorsError === undefined) {
+      if (colors) {
+        setGlobal((prev) => ({
+          ...prev,
+          colors: colors,
+        }));
+      }
+    }
+    if (bgColorError === undefined) {
+      if (bgColor) {
+        setGlobal((prev) => ({
+          ...prev,
+          backgroundColor: bgColor,
+        }));
+      }
+    }
+  }, [colors, colorsError, bgColor, bgColorError]);
 
   return (
-    <GlobalContext.Provider value={{ global, setGlobal }}>
+    <GlobalContext.Provider value={{ global, setGlobal, currentPlaying }}>
       {children}
     </GlobalContext.Provider>
   );
