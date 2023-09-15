@@ -5,10 +5,10 @@ import { loadFull } from "tsparticles";
 import { particlesOptions } from "./constants";
 
 type ParticlesViewProps = {
-  test?: string[];
+  colors?: string[];
 };
 export default function ParticlesView({
-  test = ["#65e6bd"],
+  colors = ["#912E17", "#3d832cb0", "#1C3ECC", "#6fecfabc"],
 }: ParticlesViewProps) {
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
@@ -20,7 +20,7 @@ export default function ParticlesView({
       ...particlesOptions.particles,
       color: {
         ...particlesOptions.particles?.color,
-        value: test,
+        value: colors,
       },
     },
   } as IOptions;

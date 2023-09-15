@@ -15,6 +15,7 @@ interface IAuthContext {
 }
 
 const token = getAccessToken();
+
 const initialAuthContext: IAuthContext = {
   auth: {
     accessToken: token!,

@@ -11,7 +11,7 @@ export const particlesOptions2: RecursivePartial<IOptions> = {
   },
   background: {
     color: {
-      value: "#0f172a",
+      value: "#000000",
     },
   },
   fpsLimit: 120,
@@ -81,7 +81,7 @@ export const particlesOptions: ISourceOptions = {
   },
   background: {
     color: {
-      value: "#909fc2",
+      value: "#000000",
     },
   },
   particles: {
@@ -121,7 +121,7 @@ export const particlesOptions: ISourceOptions = {
       },
     },
     size: {
-      value: 300.17838682439088,
+      value: 250.17838682439088,
       random: true,
       anim: {
         enable: false,

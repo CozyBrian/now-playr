@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAuthContext } from "../../services/AuthProvider";
+import { useAuthContext } from "@/services/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
