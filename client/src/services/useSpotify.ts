@@ -1,15 +1,16 @@
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { ISpotifyPlayer, ISpotifyUser } from "@/types";
 
 function useSpotify() {
   const authAxios = useAxiosAuth();
 
   const me = {
     getCurrentUser: async () => {
-      const { data } = await authAxios.get("/me");
+      const { data } = await authAxios.get<ISpotifyUser>("/me");
       return data;
     },
     getPlaybackState: async () => {
-      const { data } = await authAxios.get("/me/player");
+      const { data } = await authAxios.get<ISpotifyPlayer>("/me/player");
       return data;
     },
   };

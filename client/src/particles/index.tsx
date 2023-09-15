@@ -3,13 +3,11 @@ import type { Engine, IOptions } from "tsparticles-engine";
 import { useCallback } from "react";
 import { loadFull } from "tsparticles";
 import { particlesOptions } from "./constants";
+import { useGlobalContext } from "@/services/appProvider";
 
-type ParticlesViewProps = {
-  colors?: string[];
-};
-export default function ParticlesView({
-  colors = ["#912E17", "#3d832cb0", "#1C3ECC", "#6fecfabc"],
-}: ParticlesViewProps) {
+export default function ParticlesView() {
+  const { colors, backgroundColor } = useGlobalContext().global;
+
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
   }, []);
@@ -23,7 +21,17 @@ export default function ParticlesView({
         value: colors,
       },
     },
+    background: {
+      ...particlesOptions.background,
+      color: {
+        value: backgroundColor,
+      },
+    },
   } as IOptions;
 
-  return <Particles id="tsparticles" init={particlesInit} options={config} />;
+  return (
+    <div className="fixed bg-zinc-900 w-screen h-screen">
+      <Particles id="tsparticles" init={particlesInit} options={config} />;
+    </div>
+  );
 }

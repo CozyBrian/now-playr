@@ -8,5 +8,5 @@ export default axios.create({
 export const axiosAuth = axios.create({
   baseURL: "https://api.spotify.com/v1",
   headers: { "Content-Type": "application/json" },
-  withCredentials: true,
+  // withCredentials: true,
 });

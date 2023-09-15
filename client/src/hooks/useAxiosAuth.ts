@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useAuthContext } from "../services/AuthProvider";
 import { axiosAuth } from "../lib/axios";
+import useRefreshToken from "./useRefreshToken";
+import { logoutUser } from "@/services/spotify";
 
 const useAxiosAuth = () => {
-  // const refresh = useRefreshToken();
+  const refresh = useRefreshToken();
   const { auth } = useAuthContext();
 
   useEffect(() => {
@@ -20,13 +22,14 @@ const useAxiosAuth = () => {
     const responseIntercept = axiosAuth.interceptors.response.use(
       (response) => response,
       async (error) => {
-        // const prevRequest = error?.config;
-        // if (error?.response?.status === 401 && !prevRequest?.sent) {
-        //   prevRequest.sent = true;
-        //   const newAccessToken = await refresh();
-        //   prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        //   return axiosAuth(prevRequest);
-        // }
+        const prevRequest = error?.config;
+        if (error?.response?.status === 401 && !prevRequest?.sent) {
+          prevRequest.sent = true;
+          const newAccessToken = await refresh();
+          prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          return axiosAuth(prevRequest);
+        }
+        logoutUser();
         return Promise.reject(error);
       },
     );
@@ -35,7 +38,7 @@ const useAxiosAuth = () => {
       axiosAuth.interceptors.request.eject(requestIntercept);
       axiosAuth.interceptors.response.eject(responseIntercept);
     };
-  }, [auth]);
+  }, [auth, refresh]);
 
   return axiosAuth;
 };

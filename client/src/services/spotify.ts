@@ -24,7 +24,7 @@ const getTokenTimestamp = () =>
 const getLocalAccessToken = () =>
   window.localStorage.getItem("spotify_access_token");
 
-const getLocalRefreshToken = () =>
+export const getLocalRefreshToken = () =>
   window.localStorage.getItem("spotify_refresh_token");
 
 export const logoutUser = () => {

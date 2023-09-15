@@ -1,15 +1,19 @@
+import { API_URL } from "@/constants";
 import { useAuthContext } from "../services/AuthProvider";
-import axios from "../lib/axios";
+import axios from "axios";
+import { getLocalRefreshToken } from "@/services/spotify";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuthContext();
 
   const refresh = async (): Promise<string> => {
-    const { data } = await axios("/auth/refresh", { withCredentials: true });
+    const { data } = await axios(
+      `${API_URL}/refresh_token?refresh_token=${getLocalRefreshToken()}`,
+    );
     setAuth((prev) => {
-      return { ...prev, accessToken: data.accessToken, isAuthenticated: true };
+      return { ...prev, accessToken: data.access_token, isAuthenticated: true };
     });
-    return data.accessToken;
+    return data.access_token;
   };
   return refresh;
 };
