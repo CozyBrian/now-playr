@@ -3,11 +3,14 @@ import cors from "cors";
 import path from "path";
 import v1_api from "./routes/v1/v1-router";
 import cookieparser from "cookie-parser";
+import morgan from "morgan";
 
 const app = express();
 
 
 app.use(express.static(path.join(__dirname, "..", "public")));
+
+app.use(morgan("dev"))
 
 app.use(
   cors({
