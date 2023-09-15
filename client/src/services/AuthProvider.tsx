@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { getAccessToken } from "./spotify";
 
 type Auth = {
   isAuthenticated: boolean;
@@ -13,8 +14,10 @@ interface IAuthContext {
   setPersist: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const token = getAccessToken();
 const initialAuthContext: IAuthContext = {
   auth: {
+    accessToken: token!,
     isAuthenticated: false,
   },
   setAuth: () => {},

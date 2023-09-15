@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <main className="flex items-center justify-center h-screen">
+      <main className="flex items-center justify-center h-screen bg-zinc-950">
         <Routes location={location} key={location.pathname}>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
