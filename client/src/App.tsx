@@ -8,14 +8,12 @@ function App() {
 
   return (
     <>
-      <main className="flex items-center justify-center h-screen bg-zinc-950">
-        <Routes location={location} key={location.pathname}>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </main>
+      <Routes location={location} key={location.pathname}>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }
