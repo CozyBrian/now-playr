@@ -10,7 +10,7 @@ type ImgProps = {
 const Img = ({ external = false, show = false, ...props }: ImgProps) => {
   const [loaded, setLoaded] = useState(false);
 
-  const animate = () => {
+  const animate = (show: boolean, loaded: boolean) => {
     if (external) {
       return show ? (loaded ? 1 : 0) : 0;
     } else {
@@ -21,8 +21,8 @@ const Img = ({ external = false, show = false, ...props }: ImgProps) => {
   return (
     <motion.img
       initial={{ opacity: 0 }}
-      animate={{ opacity: animate() }}
-      exit={{ opacity: 0 }}
+      animate={{ opacity: animate(show, loaded) }}
+      transition={{ duration: 0.3 }}
       onLoad={() => setLoaded(true)}
       {...props}
     />
