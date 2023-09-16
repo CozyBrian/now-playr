@@ -15,7 +15,7 @@ export const getLogin = (req: Request, res: Response) => {
   res.cookie(stateKey, state);
 
   const scope =
-      'user-read-private user-read-email user-top-read user-follow-read';
+      'user-read-private user-read-email user-read-playback-state';
 
 
   res.redirect('https://accounts.spotify.com/authorize?' +

@@ -25,9 +25,9 @@ interface IAuthContext {
 
 const initialAuthContext: IAuthContext = {
   global: {
-    colors: ["#3d832cb0", "#1C3ECC", "#6fecfabc"],
+    colors: [],
     backgroundColor: "#000000",
-    showBackground: true,
+    showBackground: false,
   },
   setGlobal: () => {},
 };

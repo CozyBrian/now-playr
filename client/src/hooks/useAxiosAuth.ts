@@ -28,8 +28,9 @@ const useAxiosAuth = () => {
           const newAccessToken = await refresh();
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosAuth(prevRequest);
+        } else if (error?.response?.status === 401 && prevRequest?.sent) {
+          logoutUser();
         }
-        logoutUser();
         return Promise.reject(error);
       },
     );

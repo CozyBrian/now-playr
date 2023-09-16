@@ -1,5 +1,6 @@
 import { useGlobalContext } from "@/services/appProvider";
 import Img from "./Img";
+import { motion } from "framer-motion";
 
 const AlbumView = () => {
   const albumCoverSize = 350;
@@ -7,12 +8,15 @@ const AlbumView = () => {
 
   return (
     <div className="">
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: global.showBackground ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
         style={{
           width: albumCoverSize,
           height: albumCoverSize,
         }}
-        className="shadow-tesla-sm shadow-zinc-700/20 overflow-clip rounded-md opacity-70 hover:scale-105 hover:opacity-100 active:scale-[102.5%] duration-300"
+        className="shadow-tesla-sm shadow-zinc-800/20 overflow-clip rounded-md opacity-70 hover:scale-105 hover:opacity-100 active:scale-[102.5%] duration-300"
       >
         <Img
           src={global.albumImage}
@@ -21,10 +25,8 @@ const AlbumView = () => {
             width: albumCoverSize,
             height: albumCoverSize,
           }}
-          external
-          show={global.showBackground}
         />
-      </div>
+      </motion.div>
     </div>
   );
 };
