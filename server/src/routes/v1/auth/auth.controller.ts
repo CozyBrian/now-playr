@@ -2,13 +2,12 @@ import { Request, Response } from "express";
 import querystring from "querystring";
 const nanoid = require('nanoid');
 import { options } from "../../../utils/constants";
-import request from "request";
 import axios from "axios";
 
 const stateKey = 'spotify_auth_state';
 
-// const redirectURL = options.isDev ? "http://localhost:5173/#" : "https://spotistats-web.netlify.app/#"
-const redirectURL = "http://localhost:5173/#"
+const redirectURL = `${options.WEB_URL}/#`
+// const redirectURL = "http://localhost:5173/#"
 
 export const getLogin = (req: Request, res: Response) => {
   const state = nanoid(16);
@@ -81,24 +80,26 @@ export const getCallback = (req: Request, res: Response) => {
 export const getRefreshAccessToken = (req: Request, res: Response) => {
   // requesting access token from refresh token
   const refresh_token = req.query.refresh_token;
-  const authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 
-      'Authorization': 'Basic ' + (Buffer.from((options.client_id + ':' + options.client_secret)).toString('base64'))
-    },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
 
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      const access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
+  const data = new URLSearchParams();
+  data.append('grant_type', 'refresh_token');
+  data.append('refresh_token', refresh_token as string);
+
+  axios.post("https://accounts.spotify.com/api/token", data, {
+    headers: {
+      'Authorization': 'Basic ' + (Buffer.from((options.client_id + ':' + options.client_secret)).toString('base64')), 
     }
+  })
+  .then((response) => {
+    const body = response.data;
+
+    const access_token = body.access_token;
+    res.send({
+      'access_token': access_token
+    });
+  })
+  .catch((error) => {
+    console.log(error.response);
   });
+
 }
