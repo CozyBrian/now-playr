@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAuthContext } from "@/services/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "@/constants";
 
 function Login() {
   const { auth } = useAuthContext();
@@ -14,9 +15,7 @@ function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const LoginURL = import.meta.env.DEV
-    ? "http://localhost:3001/v1/auth/login"
-    : "https://spotistatsserver.onrender.com/v1/auth/login";
+  const LoginURL = `${API_URL}/v1/auth/login`;
 
   return (
     <main className="flex items-center justify-center h-screen bg-zinc-950">

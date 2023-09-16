@@ -8,7 +8,7 @@ const useRefreshToken = () => {
 
   const refresh = async (): Promise<string> => {
     const { data } = await axios(
-      `${API_URL}/refresh_token?refresh_token=${getLocalRefreshToken()}`,
+      `${API_URL}/v1/auth/refresh_token?refresh_token=${getLocalRefreshToken()}`,
     );
     setAuth((prev) => {
       return { ...prev, accessToken: data.access_token, isAuthenticated: true };

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { getHashParams } from "../utils";
+import { API_URL } from "@/constants";
 
-const SERVER_URL = import.meta.env.DEV
-  ? "http://localhost:3001/v1/auth"
-  : "https://spotistatsserver.onrender.com/v1/auth";
+const SERVER_URL = `${API_URL}/v1/auth`;
 
 // TOKENS ******************************************************************************************
 const EXPIRATION_TIME = 3600 * 1000; // 3600 seconds * 1000 = 1 hour in milliseconds
