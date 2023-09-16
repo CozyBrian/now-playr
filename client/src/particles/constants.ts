@@ -111,7 +111,7 @@ export const particlesOptions: ISourceOptions = {
       },
     },
     opacity: {
-      value: 0.662884018971109,
+      value: 0.7,
       random: false,
       anim: {
         enable: false,
@@ -121,11 +121,11 @@ export const particlesOptions: ISourceOptions = {
       },
     },
     size: {
-      value: 250.17838682439088,
+      value: 300.17838682439088,
       random: true,
       anim: {
         enable: false,
-        speed: 40,
+        speed: 50,
         size_min: 0.1,
         sync: false,
       },

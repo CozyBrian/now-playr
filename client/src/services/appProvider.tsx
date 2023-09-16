@@ -7,11 +7,13 @@ import {
 } from "react";
 import useCurrentPlaying from "@/hooks/useCurrentPlaying";
 import { ISpotifyPlayer } from "@/types";
-import { useColor, usePalette } from "color-thief-react";
+import { usePalette } from "color-thief-react";
+import { wait } from "@/utils";
 
 type Globals = {
   colors: string[];
   backgroundColor: string;
+  albumImage?: string;
   showBackground: boolean;
 };
 
@@ -45,32 +47,32 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     },
   );
 
-  const { data: bgColor, error: bgColorError } = useColor(
-    currentPlaying?.item?.album?.images[0].url ?? "",
-    "hex",
-    {
-      crossOrigin: "Anonymous",
-    },
-  );
-
   useEffect(() => {
-    if (colorsError === undefined) {
-      if (colors) {
-        setGlobal((prev) => ({
-          ...prev,
-          colors: colors,
-        }));
+    const changeColor = async () => {
+      if (colorsError === undefined) {
+        if (colors) {
+          setGlobal((prev) => ({
+            ...prev,
+            showBackground: false,
+          }));
+          await wait(300);
+          setGlobal((prev) => ({
+            ...prev,
+            backgroundColor: colors[0],
+            albumImage: currentPlaying?.item?.album?.images[0].url,
+            colors: colors,
+          }));
+          await wait(300);
+          setGlobal((prev) => ({
+            ...prev,
+            showBackground: true,
+          }));
+        }
       }
-    }
-    if (bgColorError === undefined) {
-      if (bgColor) {
-        setGlobal((prev) => ({
-          ...prev,
-          backgroundColor: bgColor,
-        }));
-      }
-    }
-  }, [colors, colorsError, bgColor, bgColorError]);
+    };
+
+    changeColor();
+  }, [colors, colorsError, currentPlaying?.item?.album?.images]);
 
   return (
     <GlobalContext.Provider value={{ global, setGlobal, currentPlaying }}>

@@ -20,3 +20,6 @@ export const formatWithCommas = (n: number) =>
   n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 export const getYear = (date: string) => date.split("-")[0];
+
+export const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
