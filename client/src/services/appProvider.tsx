@@ -72,7 +72,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     };
 
     changeColor();
-  }, [colors, colorsError, currentPlaying?.item?.album?.images]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [colors, colorsError]);
 
   return (
     <GlobalContext.Provider value={{ global, setGlobal, currentPlaying }}>
