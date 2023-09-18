@@ -2,7 +2,7 @@ import {
   ReactNode,
   createContext,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useState,
 } from "react";
 import useCurrentPlaying from "@/hooks/useCurrentPlaying";
@@ -47,7 +47,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     },
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const changeColor = async () => {
       if (colorsError === undefined) {
         if (colors) {
