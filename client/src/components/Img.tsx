@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { MotionProps, motion } from "framer-motion";
 
 type ImgProps = {
@@ -18,12 +18,17 @@ const Img = ({ external = false, show = false, ...props }: ImgProps) => {
     }
   };
 
+  useLayoutEffect(() => {
+    setLoaded(false);
+  }, [props.src]);
+
   return (
     <motion.img
       initial={{ opacity: 0 }}
       animate={{ opacity: animate(show, loaded) }}
       transition={{ duration: 0.3 }}
       onLoad={() => setLoaded(true)}
+      sizes=""
       {...props}
     />
   );
