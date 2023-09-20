@@ -17,7 +17,7 @@ const Tooltip = ({ children, text = "tooltip" }: TooltipProps) => {
     <div
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
-      className="relative"
+      className="relative w-fit"
     >
       <AnimatePresence>
         {whichToshow && (

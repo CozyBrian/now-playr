@@ -39,7 +39,7 @@ const AlbumCard = ({
           </Tooltip>
           {"·"}
           <Tooltip text={currentPlaying?.item?.album?.name}>
-            <h2 className="font-medium text-sm text-start truncate w-1/3 max-w-full">
+            <h2 className="font-medium text-sm text-start truncate max-w-full">
               {currentPlaying?.item?.album?.name}
             </h2>
           </Tooltip>
