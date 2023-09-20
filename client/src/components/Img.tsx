@@ -19,7 +19,7 @@ const Img = ({ external = false, show = false, ...props }: ImgProps) => {
   };
 
   useLayoutEffect(() => {
-    setLoaded(false);
+    // setLoaded(false);
   }, [props.src]);
 
   return (
