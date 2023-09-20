@@ -9,7 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { logoutUser } from "@/services/spotify";
-import { LogOut } from "lucide-react";
+import { Expand, LogOut, Shrink } from "lucide-react";
+import useFullscreen from "@/hooks/useFullscreen";
 
 const Header = () => {
   const { getCurrentUser } = useSpotify().me;
@@ -19,6 +20,15 @@ const Header = () => {
     queryFn: getCurrentUser,
     refetchOnWindowFocus: false,
   });
+
+  const isFullscreen = useFullscreen();
+
+  const toggleFullscreen = () => {
+    isFullscreen
+      ? window.document.exitFullscreen()
+      : window.document.body.requestFullscreen();
+  };
+
   return (
     <div className="absolute top-0 right-0 flex flex-row items-center gap-2 p-4 opacity-20 hover:opacity-100 duration-200">
       <DropdownMenu>
@@ -32,6 +42,14 @@ const Header = () => {
         <DropdownMenuContent className="w-56 mr-4">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => toggleFullscreen()}>
+            {isFullscreen ? (
+              <Shrink className="mr-2 h-4 w-4" />
+            ) : (
+              <Expand className="mr-2 h-4 w-4" />
+            )}
+            <span>{isFullscreen ? "Leave fullscreen" : "Fullscreen"}</span>
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => logoutUser()}>
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
